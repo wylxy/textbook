@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sheepion.mapper.LogMapper">
+  <resultMap id="BaseResultMap" type="com.sheepion.model.Log">
+    <id column="logId" jdbcType="INTEGER" property="logId" />
+    <result column="logMessage" jdbcType="VARCHAR" property="logMessage" />
+    <result column="managerId" jdbcType="VARCHAR" property="managerId" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+
+  </resultMap>
+<!--  <sql id="Example_Where_Clause">-->
+<!--    <where>-->
+<!--      <foreach collection="oredCriteria" item="criteria" separator="or">-->
+<!--        <if test="criteria.valid">-->
+<!--          <trim prefix="(" prefixOverrides="and" suffix=")">-->
+<!--            <foreach collection="criteria.criteria" item="criterion">-->
+<!--              <choose>-->
+<!--                <when test="criterion.noValue">-->
+<!--                  and ${criterion.condition}-->
+<!--                </when>-->
+<!--                <when test="criterion.singleValue">-->
+<!--                  and ${criterion.condition} #{criterion.value}-->
+<!--                </when>-->
+<!--                <when test="criterion.betweenValue">-->
+<!--                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}-->
+<!--                </when>-->
+<!--                <when test="criterion.listValue">-->
+<!--                  and ${criterion.condition}-->
+<!--                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">-->
+<!--                    #{listItem}-->
+<!--                  </foreach>-->
+<!--                </when>-->
+<!--              </choose>-->
+<!--            </foreach>-->
+<!--          </trim>-->
+<!--        </if>-->
+<!--      </foreach>-->
+<!--    </where>-->
+<!--  </sql>-->
+<!--  <sql id="Update_By_Example_Where_Clause">-->
+<!--    <where>-->
+<!--      <foreach collection="example.oredCriteria" item="criteria" separator="or">-->
+<!--        <if test="criteria.valid">-->
+<!--          <trim prefix="(" prefixOverrides="and" suffix=")">-->
+<!--            <foreach collection="criteria.criteria" item="criterion">-->
+<!--              <choose>-->
+<!--                <when test="criterion.noValue">-->
+<!--                  and ${criterion.condition}-->
+<!--                </when>-->
+<!--                <when test="criterion.singleValue">-->
+<!--                  and ${criterion.condition} #{criterion.value}-->
+<!--                </when>-->
+<!--                <when test="criterion.betweenValue">-->
+<!--                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}-->
+<!--                </when>-->
+<!--                <when test="criterion.listValue">-->
+<!--                  and ${criterion.condition}-->
+<!--                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">-->
+<!--                    #{listItem}-->
+<!--                  </foreach>-->
+<!--                </when>-->
+<!--              </choose>-->
+<!--            </foreach>-->
+<!--          </trim>-->
+<!--        </if>-->
+<!--      </foreach>-->
+<!--    </where>-->
+<!--  </sql>-->
+<!--  <sql id="Base_Column_List">-->
+<!--    id, name, id_number, address, street_id, income, contact_info-->
+<!--  </sql>-->
+<!--  <select id="selectByExample" parameterType="com.sheepion.model.ResidentExample" resultMap="BaseResultMap">-->
+<!--    select-->
+<!--    <if test="distinct">-->
+<!--      distinct-->
+<!--    </if>-->
+<!--    <include refid="Base_Column_List" />-->
+<!--    from resident-->
+<!--    <if test="_parameter != null">-->
+<!--      <include refid="Example_Where_Clause" />-->
+<!--    </if>-->
+<!--    <if test="orderByClause != null">-->
+<!--      order by ${orderByClause}-->
+<!--    </if>-->
+<!--  </select>-->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from gifts
+    where giftsId = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from gifts
+    where giftsId = #{id,jdbcType=INTEGER}
+  </delete>
+<!--  <delete id="deleteByExample" parameterType="com.sheepion.model.ResidentExample">-->
+<!--    delete from resident-->
+<!--    <if test="_parameter != null">-->
+<!--      <include refid="Example_Where_Clause" />-->
+<!--    </if>-->
+<!--  </delete>-->
+<!--  <insert id="insert" parameterType="com.sheepion.model.Resident">-->
+<!--    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">-->
+<!--      SELECT LAST_INSERT_ID()-->
+<!--    </selectKey>-->
+<!--    insert into resident (name, id_number, address,-->
+<!--      street_id, income, contact_info-->
+<!--      )-->
+<!--    values (#{name,jdbcType=VARCHAR}, #{idNumber,jdbcType=CHAR}, #{address,jdbcType=VARCHAR},-->
+<!--      #{streetId,jdbcType=INTEGER}, #{income,jdbcType=INTEGER}, #{contactInfo,jdbcType=VARCHAR}-->
+<!--      )-->
+<!--  </insert>-->
+  <insert id="insert" parameterType="com.sheepion.model.Log">
+<!--    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">-->
+<!--      SELECT LAST_INSERT_ID()-->
+<!--    </selectKey>-->
+    insert into log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="null != logMessage and '' != logMessage">
+        logMessage,
+      </if>
+      <if test="null != managerId ">
+        managerId,
+      </if>
+      <if test="null != time and '' != time">
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="null != logMessage ">
+        #{logMessage},
+      </if>
+      <if test="null != managerId and '' != managerId">
+        #{managerId},
+      </if>
+      <if test="null != time ">
+        #{time},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample"  resultType="java.lang.Integer">
+    select count(*) from gifts
+    <if test="name != null">
+      giftsName like #{name}
+    </if>
+  </select>
+<!--  &lt;!&ndash;分页模糊查询&ndash;&gt;-->
+  <select id="list" resultMap="BaseResultMap" parameterType="map">
+    select * from gifts
+    <where>
+        <if test="name != null">
+          giftsName like #{name}
+        </if>
+    </where>
+    limit #{offset}, #{pageSize}
+  </select>
+<!--  <update id="updateByExampleSelective" parameterType="map">-->
+<!--    update resident-->
+<!--    <set>-->
+<!--      <if test="record.id != null">-->
+<!--        id = #{record.id,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="record.name != null">-->
+<!--        name = #{record.name,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="record.idNumber != null">-->
+<!--        id_number = #{record.idNumber,jdbcType=CHAR},-->
+<!--      </if>-->
+<!--      <if test="record.address != null">-->
+<!--        address = #{record.address,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="record.streetId != null">-->
+<!--        street_id = #{record.streetId,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="record.income != null">-->
+<!--        income = #{record.income,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="record.contactInfo != null">-->
+<!--        contact_info = #{record.contactInfo,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--    </set>-->
+<!--    <if test="_parameter != null">-->
+<!--      <include refid="Update_By_Example_Where_Clause" />-->
+<!--    </if>-->
+<!--  </update>-->
+<!--  <update id="updateByExample" parameterType="map">-->
+<!--    update resident-->
+<!--    set id = #{record.id,jdbcType=INTEGER},-->
+<!--      name = #{record.name,jdbcType=VARCHAR},-->
+<!--      id_number = #{record.idNumber,jdbcType=CHAR},-->
+<!--      address = #{record.address,jdbcType=VARCHAR},-->
+<!--      street_id = #{record.streetId,jdbcType=INTEGER},-->
+<!--      income = #{record.income,jdbcType=INTEGER},-->
+<!--      contact_info = #{record.contactInfo,jdbcType=VARCHAR}-->
+<!--    <if test="_parameter != null">-->
+<!--      <include refid="Update_By_Example_Where_Clause" />-->
+<!--    </if>-->
+<!--  </update>-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.sheepion.model.Customer">
+    update gifts
+    <set>
+      <if test="null != giftsName and '' != giftsName">giftsName = #{giftsName},</if>
+      <if test="null != giftTime ">giftTime = #{giftTime},</if>
+      <if test="null != giftsSource and '' != giftsSource">giftsSource = #{giftsSource},</if>
+      <if test="null != giftsPeriod and '' != giftsPeriod">giftsPeriod = #{giftsPeriod},</if>
+      <if test="null != giftsNumber and '' != giftsNumber">giftsNumber = #{giftsNumber},</if>
+      <if test="null != giftsDamageNumber and '' != giftsDamageNumber">giftsDamageNumber = #{giftsDamageNumber},</if>
+      <if test="null != giftsDamageKind and '' != giftsDamageKind">giftsDamageKind = #{giftsDamageKind},</if>
+      <if test="null != giftsDamageCause and '' != giftsDamageCause">giftsDamageCause = #{giftsDamageCause},</if>
+      <if test="null != giftsPrize and '' != giftsPrize">giftsPrize = #{giftsPrize},</if>
+      <if test="null != giftTypeId ">giftTypeId = #{giftTypeId}</if>
+    </set>
+    where giftsId = #{giftsId,jdbcType=INTEGER}
+  </update>
+<!--  <update id="updateByPrimaryKey" parameterType="com.sheepion.model.Resident">-->
+<!--    update resident-->
+<!--    set name = #{name,jdbcType=VARCHAR},-->
+<!--      id_number = #{idNumber,jdbcType=CHAR},-->
+<!--      address = #{address,jdbcType=VARCHAR},-->
+<!--      street_id = #{streetId,jdbcType=INTEGER},-->
+<!--      income = #{income,jdbcType=INTEGER},-->
+<!--      contact_info = #{contactInfo,jdbcType=VARCHAR}-->
+<!--    where id = #{id,jdbcType=INTEGER}-->
+<!--  </update>-->
+</mapper>

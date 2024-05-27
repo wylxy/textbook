@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties resource="application.properties"/>
+    <context id="mybatis-generator" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!-- 为生成的Java模型创建一个toString方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!--生成mapper.xml时覆盖原文件-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!-- 数据库连接信息 -->
+        <jdbcConnection driverClass="${jdbc.driver}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+        <!--生成model-->
+        <javaModelGenerator targetPackage="com.sheepion.generator.model" targetProject="src/main/java"/>
+        <!--生成mapper的xml文件-->
+        <sqlMapGenerator targetPackage="com.sheepion.generator.mapper.xml" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成mapper -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.sheepion.generator.mapper"
+                             targetProject="src/main/java"/>
+        <!-- 配置表和实体类名称 -->
+        <table tableName="adminor" domainObjectName="Administrator">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="permission" domainObjectName="Permission">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="role" domainObjectName="Role">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="role_permission" domainObjectName="RolePermission">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="announcement" domainObjectName="Announcement">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="announcement_visibility" domainObjectName="AnnouncementVisibility">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="application" domainObjectName="Application">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="approver" domainObjectName="Approver">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="approval_level" domainObjectName="ApprovalLevel">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="assistance_project" domainObjectName="AssistanceProject">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="goverment_log" domainObjectName="GovermentLog">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="project_member" domainObjectName="ProjectMember">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="resident" domainObjectName="Resident">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="street" domainObjectName="Street">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="target_group" domainObjectName="TargetGroup">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="useExample" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

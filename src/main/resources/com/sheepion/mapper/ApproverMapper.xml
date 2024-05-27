@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sheepion.mapper.ApproverMapper">
+  <resultMap id="BaseResultMap" type="com.sheepion.model.Approver">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="application_id" jdbcType="INTEGER" property="applicationId" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="permission_id" jdbcType="INTEGER" property="permissionId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="date" jdbcType="DATE" property="date" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, application_id, level, permission_id, user_id, status, comment, date
+  </sql>
+  <select id="selectByExample" parameterType="com.sheepion.model.ApproverExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from approver
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from approver
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from approver
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sheepion.model.ApproverExample">
+    delete from approver
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sheepion.model.Approver">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into approver (application_id, level, permission_id, 
+      user_id, status, comment, 
+      date)
+    values (#{applicationId,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, #{permissionId,jdbcType=INTEGER}, 
+      #{userId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, 
+      #{date,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sheepion.model.Approver">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into approver
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="applicationId != null">
+        application_id,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="permissionId != null">
+        permission_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="applicationId != null">
+        #{applicationId,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="permissionId != null">
+        #{permissionId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sheepion.model.ApproverExample" resultType="java.lang.Long">
+    select count(*) from approver
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <select id="selectNextApprover" resultType="com.sheepion.model.Approver" parameterType="map">
+      SELECT *
+      FROM approver
+      WHERE application_id = #{applicationId}
+        AND status = 0
+      ORDER BY level ASC
+      LIMIT 1;
+    </select>
+  <select id="selectUnhandledByUserId" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+      a.*
+    FROM
+      approver AS a
+        INNER JOIN
+        application AS app
+        ON
+          a.application_id = app.id
+        INNER JOIN
+      -- 获取具有权限的审批
+        (SELECT
+           ap.application_id,
+           ap.level
+         FROM
+           approver AS ap
+             INNER JOIN
+           -- 获取用户权限
+             (SELECT
+                rp.permission_id
+              FROM
+                adminor AS ad
+                  INNER JOIN
+                role_permission AS rp
+                ON
+                  ad.role = rp.role_id
+              WHERE
+                ad.id = #{userId}) AS userPermission
+           ON
+             ap.permission_id = userPermission.permission_id) AS permissionApprover
+      ON
+            a.application_id = permissionApprover.application_id
+          AND a.level = permissionApprover.level
+    WHERE
+      -- 审批未被处理
+      a.status = 0
+      AND
+      -- 前一级的审批已经通过
+      (a.level = 1
+        OR
+       EXISTS (SELECT 1
+               FROM approver AS prevApp
+               WHERE prevApp.application_id = a.application_id
+                 AND prevApp.level = a.level - 1
+                 AND prevApp.status = 1))
+    AND app.type = #{type}
+    LIMIT #{offset}, #{pageSize};
+  </select>
+  <!--这个和selectUnhandledByUserId的语句极度相似，就是比他多了已经处理的审批-->
+  <select id="selectReceivedApprovers" resultType="com.sheepion.model.Approver" parameterType="map">
+    SELECT
+      a.*
+    FROM
+      approver AS a
+        INNER JOIN
+        application AS app
+        ON
+          a.application_id = app.id
+        INNER JOIN
+      -- 获取具有权限的审批
+        (SELECT
+           ap.application_id,
+           ap.level
+         FROM
+           approver AS ap
+             INNER JOIN
+           -- 获取用户权限
+             (SELECT
+                rp.permission_id
+              FROM
+                adminor AS ad
+                  INNER JOIN
+                role_permission AS rp
+                ON
+                  ad.role = rp.role_id
+              WHERE
+                ad.id = #{userId}) AS userPermission
+           ON
+             ap.permission_id = userPermission.permission_id) AS permissionApprover
+      ON
+            a.application_id = permissionApprover.application_id
+          AND a.level = permissionApprover.level
+    WHERE
+      -- 前一级的审批已经通过
+      (a.level = 1
+        OR
+       EXISTS (SELECT 1
+               FROM approver AS prevApp
+               WHERE prevApp.application_id = a.application_id
+                 AND prevApp.level = a.level - 1
+                 AND prevApp.status = 1))
+    AND app.type = #{type}
+    LIMIT #{offset}, #{pageSize};
+  </select>
+    <select id="countReceivedApprovers" resultType="java.lang.Integer" parameterType="map">
+      SELECT
+        count(a.id)
+      FROM
+        approver AS a
+          INNER JOIN
+        application AS app
+        ON
+          a.application_id = app.id
+          INNER JOIN
+        -- 获取具有权限的审批
+          (SELECT
+             ap.application_id,
+             ap.level
+           FROM
+             approver AS ap
+               INNER JOIN
+             -- 获取用户权限
+               (SELECT
+                  rp.permission_id
+                FROM
+                  adminor AS ad
+                    INNER JOIN
+                  role_permission AS rp
+                  ON
+                    ad.role = rp.role_id
+                WHERE
+                  ad.id = #{userId}) AS userPermission
+             ON
+               ap.permission_id = userPermission.permission_id) AS permissionApprover
+        ON
+              a.application_id = permissionApprover.application_id
+            AND a.level = permissionApprover.level
+      WHERE
+        -- 前一级的审批已经通过
+        (a.level = 1
+          OR
+         EXISTS (SELECT 1
+                 FROM approver AS prevApp
+                 WHERE prevApp.application_id = a.application_id
+                   AND prevApp.level = a.level - 1
+                   AND prevApp.status = 1))
+        AND app.type = #{type}
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+    update approver
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.applicationId != null">
+        application_id = #{record.applicationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.level != null">
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.permissionId != null">
+        permission_id = #{record.permissionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null">
+        date = #{record.date,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update approver
+    set id = #{record.id,jdbcType=INTEGER},
+      application_id = #{record.applicationId,jdbcType=INTEGER},
+      level = #{record.level,jdbcType=INTEGER},
+      permission_id = #{record.permissionId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      date = #{record.date,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sheepion.model.Approver">
+    update approver
+    <set>
+      <if test="applicationId != null">
+        application_id = #{applicationId,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="permissionId != null">
+        permission_id = #{permissionId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sheepion.model.Approver">
+    update approver
+    set application_id = #{applicationId,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      permission_id = #{permissionId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      date = #{date,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
